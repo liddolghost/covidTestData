@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>༊*·˚Admin Dashboard</title>
+    <script defer src="./bundle.js"></script>
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Jquery -->
+    <!-- I used a different source for datatables. -->
+
+
+    <!-- js charting script 
+  <script src="https://code.jscharting.com/latest/jscharting.js"></script>
+    <script type="text/javascript" src="https://code.jscharting.com/latest/modules/toolbar.js"></script>
+    <script type="text/javascript" src="https://code.jscharting.com/latest/modules/types.js"></script>
+    -->
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    
+    
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1"></script>
+
+</head>
+
+<body>
+    <div class="container-fluid position-relative d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-secondary navbar-dark">
+                <a href="admin_dashboard.html" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>Tracker</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="assets/cat.jpg" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">Meyawo</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="admin_dashboard.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="dataSet.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Data Set</a>
+                <!-- <a href="visual.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Visualization</a> -->
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+                <a href="admin_dashboard.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <form class="d-none d-md-flex ms-4">
+                    <input class="form-control bg-dark border-0" type="search" placeholder="Search">
+                </form>
+                <div class="navbar-nav align-items-center ms-auto">
+            
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="assets/cat.jpg" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">Admin</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">Admin Profile</a>
+                            <a href="#" id= "logout" class="dropdown-item">Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+
+            <!-- Card Started -->
+            
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+
+                  <div class="col-sm-6 col-xl-3">
+                    <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                        <i class="fa fa-server fa-3x text-primary"></i>
+                        <div class="ms-3">
+                            <p class="mb-2" id="total-input">0<br><span>Calculating Inputs...</span></p>
+                        </div>
+                    </div>
+                  </div>          
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-location-arrow fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2" id="total-location">0<br><span>Calculating Locations...</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-briefcase-medical fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2" id="total-cases">0<br><span>Calculating Cases...</span></p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-skull-crossbones fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2" id="total-deaths">0<br><span>Calculating Deaths...</span></p>
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+         
+                </div>
+            </div>
+
+
+            <!-- Chart Start -->
+            <div class="container-fluid pt-4 px-4">
+              <div class="row g-4">
+                <div class="col-sm-12 col-xl-6">
+                  <div class="bg-secondary rounded h-100 p-4">
+                      <h6 class="mb-4">Total Cases</h6>
+                      <canvas id="bar-chart-cases"></canvas>
+                  </div>
+              </div>
+                <div class="col-sm-12 col-xl-6">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <h6 class="mb-4">Total Deaths</h6>
+                        <canvas id="bar-chart-deaths"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-xl-6">
+                  <div class="bg-secondary rounded h-100 p-4">
+                      <h6 class="mb-4">Total of New Cases vs. Total of New Deaths</h6>
+                      <canvas id="pie-chart"></canvas>
+                  </div>
+              </div>
+
+              <div class="col-sm-12 col-xl-6">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <h6 class="mb-4">Top 3 Countries that has the most high cases</h6>
+                    <canvas id="doughnut-chart"></canvas>
+                </div>
+              </div>
+              </div>
+          </div>
+          <!-- Chart End -->
+
+          <!-- Widgets Start -->
+          <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-sm-12 col-md-6 col-xl-4">
+                    <div class="h-100 bg-secondary rounded p-4">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <h6 class="mb-0">Calender</h6>
+                        </div>
+                        <div id="calender"></div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        <!-- Widgets End -->
+
+
+
+            <!-- Data Table Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-secondary text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Covid-19 Country Test Record</h6>
+                        <a href="dataSet.html">Show All</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0" id="CovidDataTables">
+                            <thead>
+                                <tr class="text-white">
+                                    <th>ISO Code</th>
+                                    <th>Location</th>
+                                    <th>Date</th>
+                                    <th>New Cases</th>
+                                    <th>New Deaths</th>
+                                </tr>
+                            </thead>
+                          <tbody id="tbody"></tbody>
+                        </table>
+                    </div>  
+                </div>
+            </div>
+            <!--DATA TABLE END-->
+
+            
+            
+           
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-secondary rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">U_U:Ustoqna Umiyaq</a>, All Right Reserved. 
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                            <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- Firebase SDK -->
+    <!-- Required to import here in html because of using snapshot/onsnapshot function -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+
+    <!-- Move this script tag below the Firebase SDK script tags -->
+    <script src="js/barchart.js"></script>
+    <!-- template bootstrap -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script> -->
+    
+    <script src="js/script.js"></script>
+    <script type="module" src="js/add.js"></script>
+    <script type="module" src="js/get.js"></script>
+    <script type="module" src="./js/signout.js"></script>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/chart/chart.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+  
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+      import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+      import { connectFirestoreEmulator, orderBy, limit, getFirestore, setDoc, addDoc, doc, updateDoc, deleteDoc, getDoc, query, collection, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
+
+      // Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAnaFRqleoDNpz61gbFyTuuuWLLra1QJU4",
+  authDomain: "coviddata-ff21d.firebaseapp.com",
+  projectId: "coviddata-ff21d",
+  storageBucket: "coviddata-ff21d.appspot.com",
+  messagingSenderId: "669024748294",
+  appId: "1:669024748294:web:a48f05cadf5d40324b1487",
+  measurementId: "G-2R5ZX8GRSL"
+};
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth();
+      const db = getFirestore(app); // GET A REFERENCE TO THE FIRESTORE DATABASE
+      console.log(app);
+      firebase.initializeApp(firebaseConfig);
+
+
+      // Total number of Inputted data
+      document.addEventListener("DOMContentLoaded", async function() {
+        const querySnapshot = await getDocs(collection(db, "covid-test"));
+        const totalInputs = querySnapshot.size;
+        console.log('count: ', totalInputs);
+        document.getElementById("total-input").innerHTML = `${totalInputs}<br><span>Total Inputs</span>`;
+      });
+
+      // Total number of Unique location
+      document.addEventListener("DOMContentLoaded", async function() {
+        const querySnapshot = await getDocs(collection(db, "covid-test"));
+        const uniqueLocations = new Set();
+
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          uniqueLocations.add(data.Location);
+        });
+
+        const totalLocations = uniqueLocations.size;
+        console.log('count: ', totalLocations);
+        document.getElementById("total-location").innerHTML = `${totalLocations}<br><span>Total Countries</span>`;
+
+      /**
+       * IF ALL RECORDS IMO WANT I RECORD
+       *     //Total number of Countries
+        document.addEventListener("DOMContentLoaded", async function() {
+        const q = query(collection(db, "covid-test"));
+        const querySnapshot = await getDocs(q).then((snapshot) => {
+          if (!snapshot.empty) {
+            const totalLocations = snapshot.docs.length;
+            console.log('count: ', totalLocations);
+            document.getElementById("total-location").innerHTML = `${totalLocations}<br><span>All Records</span>`;
+          } else {
+            console.log('No documents found');
+          }
+        });
+      */
+
+        const collectionRef = collection(db, 'covid-test');
+        const queryRef = query(collectionRef);
+        let totalCases = 0;
+        let totalDeaths = 0;
+
+        // recording the total cases
+        getDocs(queryRef)
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const cases = parseInt(data.NewCases); // Replace 'newCases' with the actual field name for cases in your document data
+            totalCases += cases;
+          });
+          console.log('Total Cases:', totalCases);
+
+          const formattedTotalCases = formatNumber(totalCases);
+          document.getElementById("total-cases").innerHTML = `${formattedTotalCases}<br><span>Total Cases</span>`;
+        })
+        .catch((error) => {
+          console.log('Error getting documents:', error);
+        });
+
+        // recording the total deaths
+
+        getDocs(queryRef)
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const deaths = parseInt(data.NewDeaths); // Update with the correct field name for deaths
+            totalDeaths += deaths;
+          });
+          console.log('Total Deaths:', totalDeaths);
+
+          const formattedTotalDeaths = formatNumber(totalDeaths);
+          document.getElementById("total-deaths").innerHTML = `${formattedTotalDeaths}<br><span>Total Deaths</span>`;
+        })
+        .catch((error) => {
+          console.log('Error getting documents:', error);
+        });
+
+
+        // Getting Covid data and append it to the data table
+
+        // Function to format numbers with commas
+        function formatNumber(number) {
+          return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Fetch data from Firestore and populate the table
+        async function populateTable() {
+          const querySnapshot = await getDocs(collection(db, "covid-test"));
+          const tbody = document.getElementById("tbody");
+
+          // Sort documents based on new cases in descending order
+          const sortedDocs = querySnapshot.docs.sort((a, b) => {
+            const newCasesA = parseInt(a.data().NewCases);
+            const newCasesB = parseInt(b.data().NewCases);
+            return newCasesB - newCasesA;
+          });
+
+          // Display the top 10 countries with the highest new cases
+          for (let i = 0; i < 10 && i < sortedDocs.length; i++) {
+            const doc = sortedDocs[i];
+            const data = doc.data();
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${data.IsoCode}</td>
+              <td>${data.Location}</td>
+              <td>${data.Date}</td>
+              <td>${formatNumber(data.NewCases)}</td>
+              <td>${formatNumber(data.NewDeaths)}</td>
+            `;
+            tbody.appendChild(tr);
+          }
+        }
+
+        // Call the populateTable function to populate the table with data
+        populateTable();
+
+
+
+        // Fetch the data from Firebase and update the bar chart for total new cases
+      async function updateBarChartCases() {
+        const querySnapshot = await getDocs(collection(db, "covid-test"));
+        const locationData = {};
+  
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const location = data.Location;
+          const newCases = parseInt(data.NewCases);
+  
+          if (locationData[location]) {
+            locationData[location] += newCases;
+          } else {
+            locationData[location] = newCases;
+          }
+        });
+  
+        const locations = Object.keys(locationData).sort(); // Sort locations alphabetically
+        const totalCases = Object.values(locationData);
+  
+        // Create the bar chart for total new cases
+        new Chart(document.getElementById('bar-chart-cases'), {
+          type: 'bar',
+          data: {
+            labels: locations,
+            datasets: [{
+              label: 'Total New Cases',
+              data: totalCases,
+              backgroundColor: 'rgba(54, 162, 235, 0.6)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1,
+            }],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Total New Cases',
+                },
+              },
+            },
+          },
+        });
+      }
+  
+      // Call the updateBarChartCases function to initialize the bar chart for total new cases
+      updateBarChartCases();
+  
+      // Fetch the data from Firebase and update the bar chart for total new deaths
+      async function updateBarChartDeaths() {
+        const querySnapshot = await getDocs(collection(db, "covid-test"));
+        const locationData = {};
+  
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const location = data.Location;
+          const newDeaths = parseInt(data.NewDeaths);
+  
+          if (locationData[location]) {
+            locationData[location] += newDeaths;
+          } else {
+            locationData[location] = newDeaths;
+          }
+        });
+  
+        const locations = Object.keys(locationData).sort(); // Sort locations alphabetically
+        const totalDeaths = Object.values(locationData);
+  
+        // Create the bar chart for total new deaths
+        new Chart(document.getElementById('bar-chart-deaths'), {
+          type: 'bar',
+          data: {
+            labels: locations,
+            datasets: [{
+              label: 'Total New Deaths',
+              data: totalDeaths,
+              backgroundColor: 'rgba(255, 99, 132, 0.6)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1,
+            }],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Total New Deaths',
+                },
+              },
+            },
+          },
+        });
+      }
+  
+      // Call the updateBarChartDeaths function to initialize the bar chart for total new deaths
+      updateBarChartDeaths();
+
+      // Fetch the data from Firebase and update the pie chart
+async function updatePieChart() {
+  const querySnapshot = await getDocs(collection(db, "covid-test"));
+  let totalCases = 0;
+  let totalDeaths = 0;
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    const newCases = parseInt(data.NewCases);
+    const newDeaths = parseInt(data.NewDeaths);
+    totalCases += newCases;
+    totalDeaths += newDeaths;
+  });
+
+  // Create the pie chart
+  new Chart(document.getElementById("pie-chart"), {
+    type: "pie",
+    data: {
+      labels: ["Total Cases", "Total Deaths"],
+      datasets: [
+        {
+          label: "Total Cases vs Total Deaths",
+          data: [totalCases, totalDeaths],
+          backgroundColor: ["rgba(54, 162, 235, 0.6)", "rgba(255, 99, 132, 0.6)"],
+          borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 99, 132, 1)"],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      legend: {
+        position: "bottom",
+      },
+      title: {
+        display: true,
+        text: "Total Cases vs Total Deaths",
+      },
+    },
+  });
+}
+
+// Call the updatePieChart function to initialize the pie chart
+updatePieChart();
+
+  // Fetch data from Firestore and calculate the total new cases for each location
+  async function getTopLocationsWithMostCases() {
+    const querySnapshot = await getDocs(collection(db, "covid-test"));
+    const locationData = {};
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const location = data.Location;
+      const newCases = parseInt(data.NewCases);
+
+      if (locationData[location]) {
+        locationData[location] += newCases;
+      } else {
+        locationData[location] = newCases;
+      }
+    });
+
+    // Sort the locations based on the total new cases in descending order
+    const sortedLocations = Object.entries(locationData).sort((a, b) => b[1] - a[1]);
+
+    // Get the top 3 locations with the most total new cases
+    const topLocations = sortedLocations.slice(0, 3).map((entry) => entry[0]);
+
+    return topLocations;
+  }
+
+  // Create and update the doughnut chart with the top locations data
+  async function updateDoughnutChart() {
+    const topLocations = await getTopLocationsWithMostCases();
+    const locationData = {};
+
+    const querySnapshot = await getDocs(collection(db, "covid-test"));
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const location = data.Location;
+      const newCases = parseInt(data.NewCases);
+
+      if (topLocations.includes(location)) {
+        if (locationData[location]) {
+          locationData[location] += newCases;
+        } else {
+          locationData[location] = newCases;
+        }
+      }
+    });
+
+    /**const doughnutData = Object.entries(locationData).map(([location, totalCases]) => ({
+      label: location,
+      data: totalCases,
+    }));**/
+
+    const doughnutData = topLocations.map((location) => {
+      const totalCases = locationData[location];
+      return {
+        label: location,
+        data: totalCases,
+      };
+    });
+
+    new Chart(document.getElementById("doughnut-chart"), {
+      type: "doughnut",
+      data: {
+        labels: topLocations,
+        datasets: [
+          {
+            data: doughnutData.map((data) => data.data),
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.6)",
+              "rgba(54, 162, 235, 0.6)",
+              "rgba(255, 206, 86, 0.6)",
+            ],
+            borderColor: [
+              "rgba(255, 99, 132, 1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+       // maintainAspectRatio: false [ SHEESH GA RUN DOWN MAN NUON GRRR]
+        plugins: {
+          legend: {
+            position: "right",
+          },
+        },
+      },
+    });
+  }
+  
+
+  // Call the updateDoughnutChart function to initialize the doughnut chart
+  updateDoughnutChart();
+
+      }); // nag end ang DOMContentLoaded
+
+      function formatNumber(num) {
+        const billion = 1000000000;
+        const million = 1000000;
+      //  const thousand = 1000;
+
+        if (num >= billion) {
+          return (num / billion).toFixed(1) + 'B';
+        } else if (num >= million) {
+          return (num / million).toFixed(0) + 'M';
+      //  } else if (num >= thousand) {
+      //    return (num / thousand).toFixed(0) + 'K';
+        } else {
+          return num.toString();
+        }
+      }
+      </script>
+  </body>
+</html>
